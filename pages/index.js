@@ -10,38 +10,65 @@ import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 
 
-export default function home ({ data:{home} }) {
-  console.log(home)
+export default function page ({ data:{page} }) {
+  console.log(page)
 
   return (
+    
     <>
     <div className="section section-gray">
-      <p className="">'string'</p>
-      <p>{home.title}</p>
-    </div>
-    
-    <div className="section">
-    <p className="">'image'</p>
-      <Image 
-        src={home.heroImage.asset.url}
-        width={150}
-        height={150}
-        className='flex'
-      />
+      <p>{page.title}</p>
     </div>
 
-    <div className="section section-gray">
-    <p className="">'array' of type 'images'</p>
-      {home.galleryImages.map((image, index) => {
-        return(
-          <Image 
-          src={image.asset.url}
-          width={150}
-          height={150}
-          className='flex'
-        />
-        )
-      })}
+    <div className="p-8 my-6 bg-gray-100 hero">
+    {page.hero.map((e, heroImage, index) => {
+      return (
+        <div className="flex">
+
+          <Image
+            src={e.heroImage.asset.url}
+            width="200"
+            height="200"
+            alt="Hero Image"
+            layout="fixed"
+            className="block w-1/2"
+          />
+          
+          <div className="flex flex-wrap content-center w-1/2 ml-6 font-mono">
+            <p className="pb-2 text-3xl font-bold">{e.heading}</p>
+            <p className="text-xl">{e.tagline}</p>
+          </div>
+        </div>
+      )
+    })}
+    </div>
+
+    <div className="p-8 my-6 bg-gray-100 gallery-carousel">
+    {page.galleryCarousel.map((e, index) => {
+      return (
+        <div>
+
+          <h2>{e.galleryTitle}</h2>
+          
+          <div className="flex w-full flex-nowrap">
+          {e.galleryImages.map((e, index) => {
+            return (
+              
+                <Image
+                  src={e.asset.url}
+                  width="200"
+                  height="200"
+                  alt="Gallery Images"
+                  layout="fixed"
+                  className="flex w-1/2 mr-4"
+                />
+            )
+          })}
+          </div>
+
+        </div>
+      )
+    })}
     </div>
 
     </>
@@ -49,19 +76,27 @@ export default function home ({ data:{home} }) {
 }
 
 const query = `{
-  "home": *[_type == "home"][0] {
+  "page": *[_type == "page"][0] {
     title,
-    heroImage {
-      asset->{
-        ...
+    hero[]{
+      heading,
+      tagline,
+      label,
+      heroImage {
+        asset->{
+          ...
+        }
       }
     },
-    galleryImages[] {
-      asset->{
-        ...
+    galleryCarousel[] {
+      galleryTitle,
+      galleryImages[] {
+        asset->{
+          ...
+        }
       }
-    },
-  }
+    }
+  },
 }`
 
 

@@ -1,16 +1,16 @@
 import { sanityClient } from '../sanity'
 
-const query = `*[_type == "Hero"][0]{
-  title
-}`
+// const query = `*[_type == "Hero"][0]{
+//   title
+// }`
 
 // const pageService = new SanityPageService(query)
 
-export const Hero = ({ hero }) => {
-  return (
-    <h1>Hello</h1>
-  )
-}
+// export const Hero = ({ hero }) => {
+//   return (
+//     <h1>Hello</h1>
+//   )
+// }
 
 export const getServerSideProps = async (pageContext) => {
   return {props: {}};
