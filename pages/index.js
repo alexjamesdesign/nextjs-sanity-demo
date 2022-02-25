@@ -9,6 +9,8 @@ import { LazyMotion, domAnimation, m } from 'framer-motion'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import ExampleHero from '@/components/hero'
+import { PortableText } from '@portabletext/react'
+import BodyText from '@/components/bodyText'
 
 
 export default function homePage ({ data:{home} }) {
@@ -53,60 +55,22 @@ export default function homePage ({ data:{home} }) {
               </div>
             </>
           )}
+
+          {item._type == 'wysiwyg' && (
+
+            <div class="w-full bg-gray-100 p-8 mb-4">
+
+              <BodyText 
+                value={item.bodyText}
+              />
+
+            </div>
+
+          )}
+          
         </>
       )
     })}
-
-    {/* <div className="p-8 my-6 bg-gray-100 hero">
-    {home.hero.map((item, heroImage, index) => {
-      return (
-        <div className="flex">
-
-          <Image
-            src={e.heroImage.asset.url}
-            width="200"
-            height="200"
-            alt="Hero Image"
-            layout="fixed"
-            className="block w-1/2"
-          />
-          
-          <div className="flex flex-wrap content-center w-1/2 ml-6 font-mono">
-            <p className="pb-2 text-3xl font-bold">{e.heading}</p>
-            <p className="text-xl">{e.tagline}</p>
-          </div>
-        </div>
-      )
-    })}
-    </div> */}
-
-    {/* <div className="p-8 my-6 bg-gray-100 gallery-carousel">
-    {home.galleryCarousel.map((e, index) => {
-      return (
-        <div>
-
-          <h2>{e.galleryTitle}</h2>
-          
-          <div className="flex w-full flex-nowrap">
-          {e.galleryImages.map((e, index) => {
-            return (
-              
-                <Image
-                  src={e.asset.url}
-                  width="200"
-                  height="200"
-                  alt="Gallery Images"
-                  layout="fixed"
-                  className="flex w-1/2 mr-4"
-                />
-            )
-          })}
-          </div>
-
-        </div>
-      )
-    })}
-    </div> */}
 
     </>
   )
@@ -115,6 +79,7 @@ export default function homePage ({ data:{home} }) {
 const query = `{
   "home": *[_type == "home"][0] {
     title,
+    wysiwygtwo,
     content[]{
       ...,
       heroImage{
